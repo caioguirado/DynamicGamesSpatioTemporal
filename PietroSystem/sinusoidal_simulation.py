@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -66,4 +67,8 @@ for counter in range(40, 140):
 
 
 if __name__ == "__main__":
+    
+    with open('sinusoidal_simulation_frames.pkl', 'wb') as file:
+        pickle.dump(T, file)
+
     animate_frames(T)
