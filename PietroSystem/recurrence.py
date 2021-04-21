@@ -6,20 +6,22 @@ import scipy.signal as sgn
 from tqdm import tqdm
 # from ismember import ismember as im
 
-from utils import build_neighbors_matrix, ismember, get_neighbors, Graph
+from utils import ismember, get_neighbors, Graph
 
-B = scipy.io.loadmat('B.mat')
-B = np.array(B['B'])
-# L = scipy.io.loadmat('L.mat')
-# L = np.array(L['L'])
-L = build_neighbors_matrix(246, 246)
-
-signals = B.copy()
-window_length = 40
-overlap = 20
-threshold_spectral_concentration = 0.2
-min_prominence = 0.6
-MinNumberofPointsInaRegion = 100
+# =============================================================================
+# B = scipy.io.loadmat('B.mat')
+# B = np.array(B['B'])
+# # L = scipy.io.loadmat('L.mat')
+# # L = np.array(L['L'])
+# L = build_neighbors_matrix(246, 246)
+# 
+# signals = B.copy()
+# window_length = 40
+# overlap = 20
+# threshold_spectral_concentration = 0.2
+# min_prominence = 0.6
+# MinNumberofPointsInaRegion = 100
+# =============================================================================
 
 def spatio_emporal_detection_of_recurrence(signals,
                                            L,
@@ -39,8 +41,7 @@ def spatio_emporal_detection_of_recurrence(signals,
     signals_n_rows, signals_n_cols = signals.shape
     
     for index_window in tqdm(range(0, signals_n_cols, step)):
-    
-        # index_window = 60
+
         
         if index_window + window_length <= signals_n_cols:
             B = signals[:, index_window : index_window + window_length]
@@ -213,15 +214,14 @@ def spatio_emporal_detection_of_recurrence(signals,
         
 
         newclusters = []
-        # total_clusters = []
-        # interval_cluster = None
-        # count_clusters = 0
         if numberofclusters[count_iteration] > 0 and count_clusters == 0:
             for i, cluster in enumerate(positions4):
                 count_clusters += 1
                 total_clusters.append(cluster)
-                interval_cluster = np.array([[index_window, 0]])
-                
+                if interval_cluster is None:
+                    interval_cluster = np.array([[index_window, 0]])
+                else:
+                    interval_cluster = np.vstack((interval_cluster, [index_window, 0]))
         elif numberofclusters[count_iteration] > 0 and count_clusters > 0:
             newclusters = positions4.copy()
             # check in the current window for clusters already identified in the previous window
@@ -236,7 +236,7 @@ def spatio_emporal_detection_of_recurrence(signals,
                         newclusters.pop(nc_idx)
                         flagcluster = 1
                         break
-        
+
                 if flagcluster == 0 and interval_cluster[pc_idx, 1] == 0:
                     interval_cluster[pc_idx, 1] = index_window
     
@@ -262,12 +262,12 @@ def spatio_emporal_detection_of_recurrence(signals,
         for index2 in range(index1+1, len(total_clusters)):
             i11, _ = ismember(total_clusters[index2], total_clusters[index1])
             if sum(i11) > 0:
-                poscluster += index2
+                poscluster.append(index2)
         for index3 in range(len(poscluster)):
             total_clusters[index1] = list(set(total_clusters[index1] + total_clusters[poscluster[index3]]))
     
         if len(poscluster) != 0:
-            interval_cluster[index1, :] = [interval_cluster[index1, 1], max(interval_cluster[[index1, poscluster], 2])]
+            interval_cluster[index1, :] = [interval_cluster[index1, 1], max(interval_cluster[[index1] + poscluster, 1])]
     
         for index3 in range(len(poscluster)):
             total_clusters[poscluster[index3]] = []

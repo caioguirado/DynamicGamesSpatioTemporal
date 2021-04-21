@@ -13,3 +13,6 @@ class Frames:
 
     def get_frame(self, frame_n):
         return self.frames[:, :, frame_n]
+    
+    def get_multivariate_matrix(self):
+        return self.frames.reshape((self.frames.shape[0] * self.frames.shape[1], self.frames.shape[2]))

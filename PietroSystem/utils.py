@@ -19,6 +19,8 @@ def animate_frames(frames_obj):
                                     interval=50, 
                                     repeat_delay=1000)
     plt.show()
+    
+    return ani
 
 def get_neighbors(matrix_shape, i, j, complete=True):
     total_neighbors = 8

@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 from Frames import Frames
-from utils import create_wave_pattern, animate_frames
+from utils import create_wave_pattern, animate_frames, build_neighbors_matrix
+from recurrence import spatio_emporal_detection_of_recurrence
 
 # First wave parameters
 W1 = 32
@@ -71,4 +72,26 @@ if __name__ == "__main__":
     with open('sinusoidal_simulation_frames.pkl', 'wb') as file:
         pickle.dump(T, file)
 
-    animate_frames(T)
+    B = T.get_multivariate_matrix()
+    
+    ani = animate_frames(T)
+
+    L = build_neighbors_matrix(W, W)
+    
+    total_clusters, interval_cluster, numberofclusters = spatio_emporal_detection_of_recurrence(
+                                                                   signals=B,
+                                                                   L=L,
+                                                                   window_length=40,
+                                                                   overlap=20,
+                                                                   threshold_spectral_concentration=0.2,
+                                                                   MinNumberofPointsInaRegion=100,
+                                                                   min_prominence=0.6
+                                                        )
+    
+    for cluster in total_clusters:
+        img = np.zeros((W * W))
+        img[cluster] = 1
+        img = img.reshape((W, W))
+        plt.imshow(img)
+
+    
