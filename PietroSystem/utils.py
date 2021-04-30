@@ -7,12 +7,16 @@ def create_wave_pattern(height, width, freq, angle, phase=0):
     wave_pattern = np.sin(2 * np.pi * freq * (X * np.cos(angle) + Y * np.sin(angle)) + phase)
     return wave_pattern
 
-def animate_frames(frames_obj):
+def animate_frames(frames_obj, titles=None):
     fig, ax = plt.subplots()
     ims = []
     for i in range(frames_obj.frames.shape[-1]):
         im = ax.imshow(frames_obj.get_frame(frame_n=i), animated=True, cmap='Greys',  interpolation='nearest')
-        ims.append([im])
+        if titles is not None:
+            title = ax.text(0.5, 1, "", bbox={'facecolor':'w', 'alpha':0.5, 'pad':5},
+                                            transform=ax.transAxes, ha="center")
+            title.set_text(f'Initial frame: {titles[i][0]}, Last frame: {titles[i][1]}')
+        ims.append([im, title])
 
     ani = animation.ArtistAnimation(fig, 
                                     ims, 

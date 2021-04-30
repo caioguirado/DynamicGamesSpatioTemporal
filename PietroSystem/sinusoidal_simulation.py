@@ -1,7 +1,6 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 
 from Frames import Frames
 from utils import create_wave_pattern, animate_frames, build_neighbors_matrix
@@ -73,25 +72,43 @@ if __name__ == "__main__":
         pickle.dump(T, file)
 
     B = T.get_multivariate_matrix()
-    
-    ani = animate_frames(T)
 
-    L = build_neighbors_matrix(W, W)
+    a = np.load('outputBig.npy')
+    b = Frames(100, 50)
+    b.frames = a.copy()   
+    B = b.get_multivariate_matrix()
+    
+    ani = animate_frames(b)
+
+    ani.save('./game_of_life_pattern.gif', writer='Pillow', fps=60)
+
+    L = build_neighbors_matrix(*b.frames.shape[:2])
     
     total_clusters, interval_cluster, numberofclusters = spatio_emporal_detection_of_recurrence(
                                                                    signals=B,
                                                                    L=L,
-                                                                   window_length=40,
-                                                                   overlap=20,
+                                                                   window_length=10,
+                                                                   overlap=9,
                                                                    threshold_spectral_concentration=0.2,
-                                                                   MinNumberofPointsInaRegion=100,
+                                                                   MinNumberofPointsInaRegion=2,
                                                                    min_prominence=0.6
                                                         )
     
+    patterns = []
     for cluster in total_clusters:
-        img = np.zeros((W * W))
+        w1, w2, w3 = b.frames.shape
+        img = np.zeros((w1*w2))
         img[cluster] = 1
-        img = img.reshape((W, W))
+        img = img.reshape((w1, w2))
+        patterns.append(img)
+        plt.figure()
         plt.imshow(img)
+        
+    p = np.dstack(patterns)
+    p1 = Frames(1, 1)
+    p1.frames = p
+    ani = animate_frames(p1, interval_cluster)
+    ani.save('./game_of_life_method.gif', writer='Pillow', fps=60)
 
+    combined_clusters = np.any(p, axis=2)
     
