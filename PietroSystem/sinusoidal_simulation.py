@@ -1,9 +1,8 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-
 from Frames import Frames
-from utils import create_wave_pattern, animate_frames, build_neighbors_matrix
+from utils import create_wave_pattern, animate_frames, animate_frames2, build_neighbors_matrix
 from recurrence import spatio_emporal_detection_of_recurrence
 
 # First wave parameters
@@ -78,7 +77,7 @@ if __name__ == "__main__":
     b.frames = a.copy()   
     B = b.get_multivariate_matrix()
     
-    ani = animate_frames(b)
+    ani = animate_frames2(b)
 
     ani.save('./game_of_life_pattern.gif', writer='Pillow', fps=60)
 

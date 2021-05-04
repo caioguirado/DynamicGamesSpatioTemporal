@@ -26,6 +26,21 @@ def animate_frames(frames_obj, titles=None):
     
     return ani
 
+
+def animate_frames2(frames_obj):
+    fig, ax = plt.subplots()
+    ims = []
+    for i in range(frames_obj.frames.shape[-1]):
+        im = ax.imshow(frames_obj.get_frame(frame_n=i), animated=True, cmap='Greys', interpolation='nearest')
+        ims.append([im])
+
+    ani = animation.ArtistAnimation(fig,
+                                    ims,
+                                    interval=50,
+                                    repeat_delay=1000)
+    plt.show()
+    return ani
+
 def get_neighbors(matrix_shape, i, j, complete=True):
     total_neighbors = 8
     n_rows, n_cols = matrix_shape
