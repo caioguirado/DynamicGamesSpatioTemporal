@@ -9,3 +9,6 @@
 
 #pycharm
 .idea
+
+#Jupyter
+.ipynb_checkpoints
