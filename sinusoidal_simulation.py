@@ -80,10 +80,10 @@ if __name__ == "__main__":
     
     ani = animate_frames(b)
 
-    ani.save('./game_of_life_pattern.gif', writer='Pillow', fps=60)
+    ani.save('./game_of_life_pattern.gif', writer='Pillow', fps=600)
 
     L = build_neighbors_matrix(*b.frames.shape[:2])
-    
+
     total_clusters, interval_cluster, numberofclusters = spatio_emporal_detection_of_recurrence(
                                                                    signals=B,
                                                                    L=L,
@@ -93,7 +93,7 @@ if __name__ == "__main__":
                                                                    MinNumberofPointsInaRegion=2,
                                                                    min_prominence=0.6
                                                         )
-    
+
     patterns = []
     for cluster in total_clusters:
         w1, w2, w3 = b.frames.shape
@@ -101,9 +101,9 @@ if __name__ == "__main__":
         img[cluster] = 1
         img = img.reshape((w1, w2))
         patterns.append(img)
-        plt.figure()
+        # plt.figure()
         plt.imshow(img)
-        
+
     p = np.dstack(patterns)
     p1 = Frames(1, 1)
     p1.frames = p

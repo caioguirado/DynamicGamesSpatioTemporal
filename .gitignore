@@ -7,6 +7,8 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 
+sinusoidal_simulation_frames.pkl
+
 #pycharm
 .idea
 __pycache__

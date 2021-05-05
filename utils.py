@@ -16,8 +16,9 @@ def animate_frames(frames_obj, titles=None):
             title = ax.text(0.5, 1, "", bbox={'facecolor':'w', 'alpha':0.5, 'pad':5},
                                             transform=ax.transAxes, ha="center")
             title.set_text(f'Initial frame: {titles[i][0]}, Last frame: {titles[i][1]}')
-        ims.append([im, title])
-
+            ims.append([im, title])
+        else:
+            ims.append([im])
     ani = animation.ArtistAnimation(fig, 
                                     ims, 
                                     interval=50, 
