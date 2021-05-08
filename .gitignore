@@ -12,3 +12,11 @@ sinusoidal_simulation_frames.pkl
 #pycharm
 .idea
 __pycache__
+
+# Cache files
+.DS_Store
+.idea
+.ipynb_checkpoints
+
+# Non compressed data files
+*.npy
