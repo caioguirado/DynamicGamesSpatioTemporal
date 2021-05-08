@@ -67,9 +67,6 @@ for counter in range(40, 140):
 
 
 if __name__ == "__main__":
-    
-    with open('sinusoidal_simulation_frames.pkl', 'wb') as file:
-        pickle.dump(T, file)
 
     B = T.get_multivariate_matrix()
 

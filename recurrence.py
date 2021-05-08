@@ -1,27 +1,10 @@
 import numpy as np 
 import scipy.io
-# import scipy.fft as fft
 from scipy.fftpack import fft
 import scipy.signal as sgn
 from tqdm import tqdm
-# from ismember import ismember as im
 
 from utils import ismember, get_neighbors, Graph
-
-# =============================================================================
-# B = scipy.io.loadmat('B.mat')
-# B = np.array(B['B'])
-# # L = scipy.io.loadmat('L.mat')
-# # L = np.array(L['L'])
-# L = build_neighbors_matrix(246, 246)
-# 
-# signals = B.copy()
-# window_length = 40
-# overlap = 20
-# threshold_spectral_concentration = 0.2
-# min_prominence = 0.6
-# MinNumberofPointsInaRegion = 100
-# =============================================================================
 
 def spatio_emporal_detection_of_recurrence(signals,
                                            L,
@@ -129,89 +112,7 @@ def spatio_emporal_detection_of_recurrence(signals,
         
         positions4 = [c for c in clusters if len(c) >= MinNumberofPointsInaRegion]
         
-        numberofclusters.append(len(positions4))
-        
-# =============================================================================
-#         clusters = []
-#         positions2 = positions.copy()
-#         count = 0
-#         for ind1 in tqdm(range(len(positions))):
-#         
-#             # i1111, _ = ismember(positions[ind1], positions2)
-#             i1111 = positions[ind1] in positions2
-#             if i1111:
-#                 tempcluster = []
-#                 i111, i222 = im(L[positions[ind1], :], positions)
-#                 # i111, i222 = im(L[positions[ind1], :], positions)
-#                 # hits = np.array(i222)[np.where(i111)[0]]
-#                 # positions_hits = np.array(positions)[hits].tolist()
-#                 positions_hits = np.array(positions)[i222].tolist()
-#                 tempcluster = [positions[ind1], *positions_hits]
-#                 for ind2 in range(ind1, len(positions)):
-#                     # i1, _ = ismember(L[positions[ind2], :], tempcluster)
-#                     # i1 = L[positions[ind2], :] in tempcluster
-#                     i1 = set(L[positions[ind2], :]).intersection(tempcluster)
-#                     if len(i1) > 0:
-#                         # i11, i22 = ismember(L[positions[ind2], :], positions)
-#                         i11, i22 = im(L[positions[ind2], :], positions)
-#                         if sum(i11) > 0:
-#                             # hits = np.array(i22)[np.where(i11)[0]]
-#                             # positions_hits = np.array(positions)[hits].tolist()
-#                             positions_hits = np.array(positions)[i22].tolist()
-#                             tempcluster += [*positions_hits, positions[ind2]]
-#         
-#                 clusters.append(list(set(tempcluster)))
-#                 positions2 = None
-#                 allpositions = []
-#                 for detposition in range(count):
-#                     allpositions += clusters[detposition]
-#         
-#                 positions2 = list(set(positions).difference(set(allpositions)))
-#                 count += 1
-#                 
-#         #remove small regions - possible artifacts
-#         lengthclusters = []
-#         for ind3 in range(count):
-#             lengthclusters.append(np.size(clusters[ind3]))
-# 
-#         for index0 in range(len(lengthclusters) - 1, -1, -1):
-#             if lengthclusters[index0] < MinNumberofPointsInaRegion:
-#                 clusters.pop(index0)
-#                 lengthclusters.pop(index0)
-#             
-#         positions3 = []
-#         nonemptycellsinclusters = [i for i, c in enumerate(clusters) if len(c) > 0]
-#         for index in range(len(nonemptycellsinclusters)):
-#             positions3.append(clusters[nonemptycellsinclusters[index]]) 
-#             
-#         positionstoremove = []
-#         for index1 in range(len(positions3)):
-#             i1, _ = ismember(index1, positionstoremove)
-#             if i1[0] == 0:
-#                 for index2 in range(index1+1, len(positions3)):
-#                     i11, _ = ismember(positions3[index1], positions3[index2])
-#                     if sum(i11) > 0:
-#                         positionstoremove.append(index2)
-#                         positions3[index1] = list(set(positions3[index1] + positions3[index2]))
-#         
-#         positions4 = []
-#         countpos = 1
-#         for index in range(len(positions3)):
-#             i1, _ = ismember(index, positionstoremove)
-#             if i1[0] == 0:
-#                 positions4.append(positions3[index])
-#                 countpos += 1
-#         
-#         numberofclusters = []
-#         if len(positions4) == 1:
-#             if len(positions4[0]) == 0:
-#                 numberofclusters.append(0)
-#             else:
-#                 numberofclusters.append(len(positions4))
-#         else:
-#             numberofclusters.append(len(positions4))
-# =============================================================================
-        
+        numberofclusters.append(len(positions4))     
 
         newclusters = []
         if numberofclusters[count_iteration] > 0 and count_clusters == 0:
