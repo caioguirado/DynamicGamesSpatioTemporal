@@ -7,7 +7,7 @@ def create_wave_pattern(height, width, freq, angle, phase=0):
     wave_pattern = np.sin(2 * np.pi * freq * (X * np.cos(angle) + Y * np.sin(angle)) + phase)
     return wave_pattern
 
-def animate_frames(frames_obj, titles=None):
+def animate_frames(frames_obj, titles=None, show=True):
     fig, ax = plt.subplots()
     ims = []
     for i in range(frames_obj.frames.shape[-1]):
@@ -23,7 +23,9 @@ def animate_frames(frames_obj, titles=None):
                                     ims, 
                                     interval=50, 
                                     repeat_delay=1000)
-    plt.show()
+    
+    if show:
+        plt.show()
     
     return ani
 
