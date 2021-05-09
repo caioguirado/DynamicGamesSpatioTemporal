@@ -36,7 +36,7 @@ Then, create a new experiment folder under `experiments/` and name this director
 Inside this directory, a `config.py` file is needed to input the parameters of the experiment.
 
 To run the experiment, in the root directory, run:
-`python3 generate_experiment.py --game_type <game_type> --pattern_folder_name <pattern_folder_name> --exp_folder_name <exp_folder_name>`
+```python3 generate_experiment.py --game_type <game_type> --pattern_folder_name <pattern_folder_name> --exp_folder_name <exp_folder_name>```
 
 Where:
 | Variable      | Description   |
@@ -46,7 +46,7 @@ Where:
 | <exp_folder_name>          | the name of the folder of the experiment |
 
 For the tree above, the command would be (for the evolutionary game):
-`!python3 generate_experiment.py --game_type EVO_GAME --pattern_folder_name pattern_1 --exp_folder_name experiment_1`
+```!python3 generate_experiment.py --game_type EVO_GAME --pattern_folder_name pattern_1 --exp_folder_name experiment_1```
 
 for the game of life:
-`!python3 generate_experiment.py --game_type GAME_OF_LIFE --pattern_folder_name pattern_1 --exp_folder_name experiment_1`
+```!python3 generate_experiment.py --game_type GAME_OF_LIFE --pattern_folder_name pattern_1 --exp_folder_name experiment_1```
