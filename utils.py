@@ -75,35 +75,24 @@ def ismember(a, b):
 
 class Graph:
  
-    # init function to declare class variables
     def __init__(self, V):
         self.V = V
         self.adj = [[] for i in range(V)]
  
     def DFSUtil(self, temp, v, visited):
- 
-        # Mark the current vertex as visited
         visited[v] = True
- 
-        # Store the vertex to list
         temp.append(v)
- 
-        # Repeat for all vertices adjacent
-        # to this vertex v
+        
         for i in self.adj[v]:
             if visited[i] == False:
  
-                # Update the list
                 temp = self.DFSUtil(temp, i, visited)
         return temp
  
-    # method to add an undirected edge
     def addEdge(self, v, w):
         self.adj[v].append(w)
         self.adj[w].append(v)
  
-    # Method to retrieve connected components
-    # in an undirected graph
     def connectedComponents(self):
         visited = []
         cc = []
@@ -114,24 +103,3 @@ class Graph:
                 temp = []
                 cc.append(self.DFSUtil(temp, v, visited))
         return cc
-    
-# L = np.zeros((W**2, 8)) 
-
-# L[0, :] = [2, 1+W, 2+W, 0, 0, 0, 0, 0]
-# L[W-1, :] = [W-1, 2*W, 2*W-1, 0, 0, 0, 0, 0]
-# L[W**2-W+1-1, :] = [W**2-W+2, W**2-2*W+1, W**2-2*W+2, 0, 0, 0, 0, 0]
-# L[W**2-1, :] = [W**2-1, W**2-W, W**2-W-1, 0, 0, 0, 0, 0]
-    
-# for ind in range(1, W):
-#     L[ind, :] = [ind, ind+2, ind+W, ind+W+1, ind+W+2, 0, 0, 0]
-
-# for ind in range(W**2-W+1, W**2):
-#     L[ind, :] = [ind, ind+2, ind-W, ind-W+1, ind-W+2, 0, 0, 0]
-
-# for ind in range(W, W**2-W+1):
-#     if (ind+1) % W != 0 and (ind+1) % W != 1:
-#         L[ind, :] = [ind, ind+2, ind-W, ind-W+1, ind-W+2, ind+W, ind+W+1, ind+W+2]
-#     elif (ind+1) % W == 0:
-#         L[ind, :] = [ind-W, ind-W+1, ind, ind+W, ind+W+1, 0, 0, 0]
-#     elif (ind+1) % W == 1:
-#         L[ind, :] = [ind-W+1, ind-W+2, ind+2, ind+W+1, ind+W+2, 0, 0, 0]
