@@ -1,0 +1,1 @@
+INITIAL_CONFIG_FILE = 'initial_config.npz'SIZE = (100, 100)N_FRAMES = 50POSITION = (25,25)
