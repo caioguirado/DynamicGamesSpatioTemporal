@@ -43,7 +43,7 @@ To run the experiment, in the root directory, run:
 Where:
 | Variable      | Description   |
 | ------------- |:-------------:|
-| <game_type>                | `GAME_OF_LIFE` or `EVO_GAME` |
+| <game_type>                | `GAME_OF_LIFE` or `EVO_GAME` or `EVO_GAME2` |
 | <pattern_folder_name>      | the name of the folder of the game |
 | <exp_folder_name>          | the name of the folder of the experiment |
 
