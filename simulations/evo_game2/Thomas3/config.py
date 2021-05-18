@@ -1,0 +1,1 @@
+import numpy as npINITIAL_CONFIG_FILE = 'initial_config.npz'SIZE = (100, 100)N_FRAMES = 200POSITION = (0, 0)FITNESS_MATRIX = np.array([[0, 5, 3],                           [3, 0 ,5],                           [5, 3, 0]])DEATH_RATE = 0INTER_RADIUS = 1OFFSPRINT_RADIUS = 1
