@@ -67,30 +67,32 @@ for counter in range(40, 140):
 
 
 if __name__ == "__main__":
+    with open('sinusoidal_simulation_frames.pkl', 'wb') as file:
+        pickle.dump(T, file)
 
     B = T.get_multivariate_matrix()
-
-    a = np.load('outputBig.npy')
-    b = Frames(100, 50)
-    b.frames = a.copy()   
-    B = b.get_multivariate_matrix()
-    
+    #
+    # a = np.load('outputBig.npy')
+    b = Frames(246, 246)
+    b.frames = B.reshape(246, 246, 150)
+    # B = b.get_multivariate_matrix()
+    #
     ani = animate_frames(b)
-
-    ani.save('./game_of_life_pattern.gif', writer='Pillow', fps=600)
-
+    #
+    ani.save('./simulation.gif', writer='Pillow', fps=600)
+    #
     L = build_neighbors_matrix(*b.frames.shape[:2])
-
+    #
     total_clusters, interval_cluster, numberofclusters = spatio_emporal_detection_of_recurrence(
                                                                    signals=B,
                                                                    L=L,
-                                                                   window_length=10,
-                                                                   overlap=9,
+                                                                   window_length=40,
+                                                                   overlap=20,
                                                                    threshold_spectral_concentration=0.2,
-                                                                   MinNumberofPointsInaRegion=2,
+                                                                   MinNumberofPointsInaRegion=100,
                                                                    min_prominence=0.6
                                                         )
-
+    #
     patterns = []
     for cluster in total_clusters:
         w1, w2, w3 = b.frames.shape
@@ -105,7 +107,7 @@ if __name__ == "__main__":
     p1 = Frames(1, 1)
     p1.frames = p
     ani = animate_frames(p1, interval_cluster)
-    ani.save('./game_of_life_method.gif', writer='Pillow', fps=60)
+    ani.save('./simulation_method.gif', writer='Pillow', fps=60)
 
     combined_clusters = np.any(p, axis=2)
     
