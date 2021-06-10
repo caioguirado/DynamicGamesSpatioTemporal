@@ -11,7 +11,7 @@ def animate_frames(frames_obj, titles=None, show=True, cmap='Greys'):
     fig, ax = plt.subplots()
     ims = []
     for i in range(frames_obj.frames.shape[-1]):
-        im = ax.imshow(frames_obj.get_frame(frame_n=i), animated=True, cmap=cmap,  interpolation='nearest')
+        im = ax.imshow(frames_obj.get_frame(frame_n=i), animated=True, cmap=cmap, vmin=0, vmax=3,  interpolation='nearest')
         if titles is not None:
             title = ax.text(0.5, 1, "", bbox={'facecolor':'w', 'alpha':0.5, 'pad':5},
                                             transform=ax.transAxes, ha="center")
