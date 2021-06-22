@@ -1,0 +1,1 @@
+WINDOW_LENGTH = 40OVERLAP = 20THRESHOLD_SPECTRAL_CONCENTRATION = 0.40MinNumberofPointsInaRegion = 100MIN_PROMINENCE = 0.6#python3 generate_experiment.py --game_type EVO_GAME2 --pattern_folder_name Thomas1a --exp_folder_name experiment_1
